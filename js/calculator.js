@@ -410,6 +410,9 @@
               · ${escapeHtml(r.center.name)}
             </div>
           </div>
+          <div class="actions no-print">
+            <button class="primary" id="patientSummaryBtn">📄 Resumen para paciente (PDF)</button>
+          </div>
         </div>
 
         <div class="results-summary">
@@ -444,10 +447,6 @@
         <div class="visit-cards">
           ${r.rows.map((row, i) => renderVisitCard(row, i, r.rows.length, r.travelOneWayMin, rowSummaries[i])).join('')}
         </div>
-      </div>
-
-      <div class="patient-summary-actions no-print">
-        <button class="primary" id="patientSummaryBtn">📄 Resumen para paciente (PDF)</button>
       </div>
     `;
     resultsContainer.innerHTML = html;
