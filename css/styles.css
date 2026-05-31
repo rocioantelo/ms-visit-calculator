@@ -1442,6 +1442,20 @@ table tr:hover td { background: #fafbfd; }
 .flex-row { display: flex; gap: 10px; align-items: center; }
 .flex-row > * { flex: 1; }
 
+/* Locked / read-only select (e.g. centro fijado por la sesión) */
+select.locked {
+  background: var(--primary-soft);
+  color: var(--text);
+  border-color: var(--primary);
+  font-weight: 600;
+  cursor: default;
+  opacity: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: none;
+  padding-right: 10px;
+}
+
 .duration-overrides {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));

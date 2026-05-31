@@ -29,28 +29,38 @@
 
   function populateCenters() {
     centerSelect.innerHTML = '';
-    if (data.centers.length === 0) {
+    const session = window.MsSession && window.MsSession.get();
+    const userCenterId = session && session.centerId;
+
+    // If user has a session, restrict to their center only and lock it.
+    const centersToShow = userCenterId
+      ? data.centers.filter(c => c.id === userCenterId)
+      : data.centers;
+
+    if (centersToShow.length === 0) {
       const opt = document.createElement('option');
       opt.value = '';
-      opt.textContent = '— No hay centros definidos —';
+      opt.textContent = '— No hay centro asignado —';
       centerSelect.appendChild(opt);
       centerSelect.disabled = true;
-      centerHint.textContent = 'Ve a "Protocolos por centro" para crear uno.';
+      centerHint.textContent = '';
       calculateBtn.disabled = true;
       return;
     }
-    centerSelect.disabled = false;
     calculateBtn.disabled = false;
-    data.centers.forEach(c => {
+    centersToShow.forEach(c => {
       const opt = document.createElement('option');
       opt.value = c.id;
       opt.textContent = c.name;
       centerSelect.appendChild(opt);
     });
-    // Pre-select center from session if available
-    const session = window.MsSession && window.MsSession.get();
-    if (session && session.centerId && data.centers.some(c => c.id === session.centerId)) {
-      centerSelect.value = session.centerId;
+    if (userCenterId) {
+      centerSelect.value = userCenterId;
+      centerSelect.disabled = true;
+      centerSelect.classList.add('locked');
+    } else {
+      centerSelect.disabled = false;
+      centerSelect.classList.remove('locked');
     }
     updateCenterHint();
   }
