@@ -222,11 +222,20 @@
     };
   }
 
-  async function computeRoute(patientAddress, centerAddress) {
-    const [patientLoc, centerLoc] = await Promise.all([
-      geocode(patientAddress),
-      geocode(centerAddress)
-    ]);
+  async function computeRoute(patientAddress, center) {
+    // Geocode patient; use center coordinates directly if available
+    const patientLoc = await geocode(patientAddress);
+    let centerLoc;
+    if (center.coords && center.coords.lat != null && center.coords.lon != null) {
+      centerLoc = {
+        lat: parseFloat(center.coords.lat),
+        lon: parseFloat(center.coords.lon),
+        display: center.address || center.name
+      };
+      console.log('[Route] Usando coordenadas fijas del centro:', centerLoc);
+    } else {
+      centerLoc = await geocode(center.address);
+    }
     const route = await getDrivingRoute(patientLoc, centerLoc);
     return {
       distanceKm: route.distanceKm,
@@ -266,12 +275,12 @@
     routeInfo = null;
     let routeError = null;
 
-    if (patientAddress && center.address) {
+    if (patientAddress && (center.coords || center.address)) {
       try {
         calculateBtn.disabled = true;
         calculateBtn.textContent = 'Calculando ruta…';
-        resultsContainer.innerHTML = '<div class="card empty">Geocodificando direcciones y calculando ruta en taxi…</div>';
-        routeInfo = await computeRoute(patientAddress, center.address);
+        resultsContainer.innerHTML = '<div class="card empty">Geocodificando dirección del paciente y calculando ruta en taxi…</div>';
+        routeInfo = await computeRoute(patientAddress, center);
         travelOneWayMin = routeInfo.durationMin;
       } catch (e) {
         routeError = e.message || 'Error desconocido calculando la ruta';

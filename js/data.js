@@ -236,6 +236,7 @@ const DEFAULT_CENTERS = (() => {
       id: 'vh',
       name: "Centre d'Esclerosi Múltiple de Catalunya (Cemcat) - Hospital Universitari Vall d'Hebron",
       address: "Passeig de la Vall d'Hebron, 119-129, Edifici Cemcat, 08035 Barcelona",
+      coords: { lat: 41.42667, lon: 2.14946 },
       visitProcedures: JSON.parse(JSON.stringify(fullAllegro)),
       procedureDurations: {}
     },
@@ -243,6 +244,7 @@ const DEFAULT_CENTERS = (() => {
       id: 'clinic',
       name: 'Hospital Clínic de Barcelona',
       address: 'Calle de Villarroel, 170, 08036 Barcelona',
+      coords: { lat: 41.38887, lon: 2.15125 },
       visitProcedures: removeProcedures(fullAllegro, allAncillaries),
       procedureDurations: {}
     },
@@ -250,6 +252,7 @@ const DEFAULT_CENTERS = (() => {
       id: 'bellvitge',
       name: 'Hospital Universitario de Bellvitge',
       address: "Calle de la Feixa Llarga, s/n, 08907 L'Hospitalet de Llobregat",
+      coords: { lat: 41.34786, lon: 2.10947 },
       visitProcedures: removeProcedures(fullAllegro, allButImmunology),
       procedureDurations: {}
     },
@@ -257,6 +260,7 @@ const DEFAULT_CENTERS = (() => {
       id: 'gtp',
       name: 'Hospital Universitari Germans Trias i Pujol',
       address: 'Carretera de Canyet, s/n, 08916 Badalona',
+      coords: { lat: 41.49585, lon: 2.23548 },
       visitProcedures: removeProcedures(fullAllegro, allAncillaries),
       procedureDurations: {}
     }
@@ -356,7 +360,8 @@ function findPatient(patientId) {
   return loadPatients().find(p => p.id === patientId);
 }
 
-const STORAGE_KEY = 'msTrialCalculatorData_v4';
+const STORAGE_KEY = 'msTrialCalculatorData_v5';
+const STORAGE_KEY_LEGACY_V4 = 'msTrialCalculatorData_v4';
 const STORAGE_KEY_LEGACY_V3 = 'msTrialCalculatorData_v3';
 const STORAGE_KEY_LEGACY_V2 = 'msTrialCalculatorData_v2';
 const STORAGE_KEY_LEGACY_V1 = 'msTrialCalculatorData_v1';
@@ -390,6 +395,7 @@ function loadData() {
   localStorage.removeItem(STORAGE_KEY_LEGACY_V1);
   localStorage.removeItem(STORAGE_KEY_LEGACY_V2);
   localStorage.removeItem(STORAGE_KEY_LEGACY_V3);
+  localStorage.removeItem(STORAGE_KEY_LEGACY_V4);
   return {
     visits: JSON.parse(JSON.stringify(DEFAULT_VISITS)),
     procedures: JSON.parse(JSON.stringify(DEFAULT_PROCEDURES)),
@@ -406,6 +412,7 @@ function resetData() {
   localStorage.removeItem(STORAGE_KEY_LEGACY_V1);
   localStorage.removeItem(STORAGE_KEY_LEGACY_V2);
   localStorage.removeItem(STORAGE_KEY_LEGACY_V3);
+  localStorage.removeItem(STORAGE_KEY_LEGACY_V4);
   return loadData();
 }
 

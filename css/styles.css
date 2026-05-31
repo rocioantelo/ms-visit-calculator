@@ -112,6 +112,87 @@ h3 { font-size: 15px; margin: 0 0 8px; font-weight: 600; }
   .grid-2 { grid-template-columns: 1fr; }
 }
 
+/* ============= MOBILE RESPONSIVE ============= */
+@media (max-width: 640px) {
+  header.app-header {
+    flex-wrap: wrap;
+    padding: 14px 16px 12px;
+    gap: 10px;
+    row-gap: 10px;
+  }
+  header.app-header::before { height: 4px; }
+  .brand {
+    flex: 1 1 auto;
+    font-size: 14px;
+    min-width: 0;
+  }
+  .brand .logo {
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+  .brand > span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  nav.app-nav {
+    order: 3;
+    width: 100%;
+    justify-content: stretch;
+    gap: 0;
+    border-top: 1px solid var(--border);
+    margin: 6px -16px -12px;
+    padding: 6px 4px;
+    background: var(--bg);
+  }
+  nav.app-nav a {
+    flex: 1;
+    text-align: center;
+    padding: 8px 6px;
+    font-size: 13px;
+  }
+  .header-user {
+    gap: 6px;
+    flex: 0 0 auto;
+  }
+  .header-user-info { display: none; }
+  .header-user-avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 11px;
+  }
+  .logout-link {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+  main { padding: 16px; }
+  h1 { font-size: 20px; }
+  h2 { font-size: 16px; }
+  .subtitle { font-size: 13px; margin-bottom: 16px; }
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .toolbar .actions {
+    justify-content: flex-end;
+  }
+  .card { padding: 14px 16px; }
+  .results-summary {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .stat { padding: 10px 12px; }
+  .stat .value { font-size: 18px; }
+  .visit-card-header {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+  .visit-title { font-size: 17px; }
+  .visit-step { width: 40px; height: 40px; font-size: 15px; }
+}
+
 .form-group { margin-bottom: 14px; }
 .form-group label {
   display: block;
@@ -826,6 +907,36 @@ table tr:hover td { background: #fafbfd; }
   border: 1px solid var(--border);
 }
 .logout-link:hover { color: var(--danger); border-color: var(--danger); }
+
+/* Coordinates editor */
+.coords-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.coords-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.map-link {
+  color: var(--primary);
+  font-size: 13px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.15s;
+}
+.map-link:hover { text-decoration: underline; }
+.alert code {
+  background: rgba(255,255,255,0.6);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+}
 
 /* Patient row + modal */
 .patient-row {

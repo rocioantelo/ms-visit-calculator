@@ -285,16 +285,55 @@
 
   function renderInfoTab(center) {
     const container = document.getElementById('tabContent');
+    if (!center.coords) center.coords = { lat: null, lon: null };
+
     container.innerHTML = `
       <div class="form-group">
         <label>Nombre del centro</label>
         <input type="text" id="editName" value="${escapeHtml(center.name)}">
       </div>
       <div class="form-group">
-        <label>Dirección</label>
+        <label>Dirección (informativa)</label>
         <textarea id="editAddress">${escapeHtml(center.address || '')}</textarea>
+        <div class="hint">Texto mostrado al paciente. No se usa para calcular rutas.</div>
+      </div>
+      <div class="form-group">
+        <label>Coordenadas del centro (usadas para el cálculo de rutas)</label>
+        <div class="coords-row">
+          <div>
+            <input type="number" step="0.000001" id="editLat" placeholder="Latitud" value="${center.coords.lat != null ? center.coords.lat : ''}">
+            <div class="hint">Latitud (ej. 41.42667)</div>
+          </div>
+          <div>
+            <input type="number" step="0.000001" id="editLon" placeholder="Longitud" value="${center.coords.lon != null ? center.coords.lon : ''}">
+            <div class="hint">Longitud (ej. 2.14946)</div>
+          </div>
+        </div>
+        <div class="coords-actions">
+          <a id="mapPreviewLink" href="#" target="_blank" rel="noopener" class="map-link">📍 Ver en OpenStreetMap</a>
+          <button type="button" class="secondary icon" id="clearCoordsBtn">Borrar coordenadas</button>
+        </div>
+        <div class="alert info" style="margin-top: 10px;">
+          <strong>Cómo obtener las coordenadas:</strong> abre <a href="https://www.openstreetmap.org" target="_blank" rel="noopener">openstreetmap.org</a>, busca el centro, haz clic derecho sobre la ubicación exacta → "Mostrar dirección" / "Show address". Las coordenadas aparecen en la URL como <code>?mlat=41.42667&mlon=2.14946</code>.
+        </div>
       </div>
     `;
+
+    function updateMapLink() {
+      const lat = parseFloat(document.getElementById('editLat').value);
+      const lon = parseFloat(document.getElementById('editLon').value);
+      const link = document.getElementById('mapPreviewLink');
+      if (!isNaN(lat) && !isNaN(lon)) {
+        link.href = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=18/${lat}/${lon}`;
+        link.style.opacity = '1';
+        link.style.pointerEvents = 'auto';
+      } else {
+        link.href = '#';
+        link.style.opacity = '0.5';
+        link.style.pointerEvents = 'none';
+      }
+    }
+
     container.querySelector('#editName').addEventListener('input', (e) => {
       center.name = e.target.value;
       persist();
@@ -305,6 +344,24 @@
       persist();
       renderCenterList();
     });
+    container.querySelector('#editLat').addEventListener('input', (e) => {
+      const v = e.target.value.trim();
+      center.coords.lat = v === '' ? null : parseFloat(v);
+      persist();
+      updateMapLink();
+    });
+    container.querySelector('#editLon').addEventListener('input', (e) => {
+      const v = e.target.value.trim();
+      center.coords.lon = v === '' ? null : parseFloat(v);
+      persist();
+      updateMapLink();
+    });
+    container.querySelector('#clearCoordsBtn').addEventListener('click', () => {
+      center.coords = { lat: null, lon: null };
+      persist();
+      renderInfoTab(center);
+    });
+    updateMapLink();
   }
 
   function renderAll() {
