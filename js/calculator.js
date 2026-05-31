@@ -401,6 +401,9 @@
       : '';
 
     const html = `
+      <div class="results-actions no-print">
+        <button class="primary" id="patientSummaryBtn">📄 Resumen para paciente (PDF)</button>
+      </div>
       <div class="card">
         <div class="toolbar">
           <div>
@@ -409,9 +412,6 @@
               <strong>${escapeHtml(r.patientId)}${r.patientName ? ' — ' + escapeHtml(r.patientName) : ''}</strong>
               · ${escapeHtml(r.center.name)}
             </div>
-          </div>
-          <div class="actions no-print">
-            <button class="primary" id="patientSummaryBtn">📄 Resumen para paciente (PDF)</button>
           </div>
         </div>
 
