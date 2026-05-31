@@ -116,21 +116,23 @@ h3 { font-size: 15px; margin: 0 0 8px; font-weight: 600; }
 @media (max-width: 640px) {
   header.app-header {
     flex-wrap: wrap;
-    padding: 12px 14px;
-    gap: 8px;
-    row-gap: 0;
+    padding: 18px 18px 0;
+    column-gap: 10px;
+    row-gap: 14px;
   }
   header.app-header::before { height: 4px; }
+
+  /* Row 1: brand takes full width */
   .brand {
-    flex: 1 1 auto;
-    font-size: 13px;
+    flex: 1 1 100%;
+    font-size: 15px;
     min-width: 0;
-    gap: 8px;
+    gap: 10px;
   }
   .brand .logo {
-    width: 26px;
-    height: 26px;
-    font-size: 11px;
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
     flex-shrink: 0;
   }
   .brand > span:last-child {
@@ -139,45 +141,66 @@ h3 { font-size: 15px; margin: 0 0 8px; font-weight: 600; }
     white-space: nowrap;
     line-height: 1.2;
   }
+
+  /* Row 2: user info + avatar + logout, right-aligned */
   .header-user {
-    gap: 6px;
-    flex: 0 0 auto;
+    flex: 1 1 100%;
+    gap: 12px;
     align-items: center;
+    justify-content: flex-end;
   }
   .header-user-info {
     display: block;
     text-align: right;
-    line-height: 1.15;
+    line-height: 1.2;
+    min-width: 0;
+    overflow: hidden;
   }
-  .header-user-info .name { font-size: 11px; }
-  .header-user-info .role { font-size: 10px; }
+  .header-user-info .name {
+    font-size: 13px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .header-user-info .role {
+    font-size: 11px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .header-user-avatar {
-    width: 28px;
-    height: 28px;
-    font-size: 10px;
+    width: 38px;
+    height: 38px;
+    font-size: 13px;
+    flex-shrink: 0;
   }
   .logout-link {
-    padding: 4px 8px;
-    font-size: 11px;
+    padding: 7px 12px;
+    font-size: 12px;
+    flex-shrink: 0;
   }
+
+  /* Row 3: nav as a full-width tabs strip */
   nav.app-nav {
     order: 3;
-    width: 100%;
+    flex: 1 1 100%;
     justify-content: stretch;
     gap: 0;
     border-top: 1px solid var(--border);
-    margin: 8px -14px -12px;
-    padding: 4px;
+    margin: 4px -18px 0;
+    padding: 8px;
     background: var(--bg);
   }
   nav.app-nav a {
     flex: 1;
     text-align: center;
-    padding: 8px 6px;
+    padding: 10px 6px;
     font-size: 13px;
     border-radius: 6px;
   }
-  main { padding: 16px; }
+
+  main { padding: 18px 16px; }
   h1 { font-size: 20px; }
   h2 { font-size: 16px; }
   .subtitle { font-size: 13px; margin-bottom: 16px; }
@@ -203,14 +226,14 @@ h3 { font-size: 15px; margin: 0 0 8px; font-weight: 600; }
   .visit-step { width: 40px; height: 40px; font-size: 15px; }
 }
 
-/* Very narrow screens: hide the role line and shorten the brand */
+/* Very narrow screens (<400px): hide the role to keep things tidy */
 @media (max-width: 400px) {
-  .brand > span:last-child { font-size: 12px; }
+  .brand > span:last-child { font-size: 13px; }
   .header-user-info .role { display: none; }
-  .header-user-info .name { font-size: 10px; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .header-user-info .name { max-width: 140px; }
   .logout-link {
-    padding: 4px 6px;
-    font-size: 10px;
+    padding: 6px 10px;
+    font-size: 11px;
   }
 }
 
