@@ -841,23 +841,43 @@
   }
 
   function renderVisitCard(row, idx, total, travelOneWayMin, summary) {
-    const applied = [];
-    const pending = [];
-    row.items.forEach(item => {
-      const dec = getDecision(row.visit.id, item);
-      if (dec === true) applied.push(item);
-      else if (dec === null) pending.push(item);
-    });
+    // Top chips: mandatory + decided-true conditionals
+    // Conditional block: ALL conditionals (regardless of decision) so the user
+    // can always change their mind
+    const appliedChipsItems = [];
+    const conditionalItems = [];
 
-    const footnotes = [];
-    [...applied, ...pending].forEach(item => {
-      if (item.note) {
-        footnotes.push({ procId: item.procedure.id, name: item.procedure.name, note: item.note, conditional: item.conditional, index: footnotes.length + 1 });
+    row.items.forEach(item => {
+      if (!item.conditional) {
+        appliedChipsItems.push(item);
+      } else {
+        const dec = getDecision(row.visit.id, item);
+        conditionalItems.push({ item, decision: dec });
+        if (dec === true) appliedChipsItems.push(item);
       }
     });
+    const pendingCount = conditionalItems.filter(c => c.decision === null).length;
+
+    // Footnotes from everything visible
+    const footnotes = [];
+    const noted = new Set();
+    function maybePushFn(item) {
+      if (item.note && !noted.has(item.procedure.id)) {
+        noted.add(item.procedure.id);
+        footnotes.push({
+          procId: item.procedure.id,
+          name: item.procedure.name,
+          note: item.note,
+          conditional: item.conditional,
+          index: footnotes.length + 1
+        });
+      }
+    }
+    appliedChipsItems.forEach(maybePushFn);
+    conditionalItems.forEach(c => maybePushFn(c.item));
     const findFn = (procId) => footnotes.find(f => f.procId === procId);
 
-    const appliedChips = applied.map(item => {
+    const appliedChips = appliedChipsItems.map(item => {
       const isCond = item.conditional;
       const fn = findFn(item.procedure.id);
       const marker = fn ? `<sup class="fn-marker">${fn.index}</sup>` : '';
@@ -866,21 +886,26 @@
       return `<span class="chip ${cls}" title="${escapeHtml(title)}">${escapeHtml(item.procedure.name)}${marker}</span>`;
     }).join('');
 
-    const pendingBlock = pending.length ? `
-      <div class="pending-block">
-        <div class="pending-title">⚠ Por confirmar (${pending.length})</div>
+    const conditionalBlock = conditionalItems.length ? `
+      <div class="pending-block ${pendingCount > 0 ? 'has-pending' : 'all-decided'}">
+        <div class="pending-title">
+          ${pendingCount > 0
+            ? `⚠ Por confirmar — ${pendingCount} de ${conditionalItems.length} pendientes`
+            : `Procedimientos condicionales (${conditionalItems.length})`}
+        </div>
         <div class="pending-list">
-          ${pending.map(item => {
+          ${conditionalItems.map(({ item, decision }) => {
             const fn = findFn(item.procedure.id);
             const marker = fn ? `<sup class="fn-marker">${fn.index}</sup>` : '';
+            const state = decision === true ? 'applied' : decision === false ? 'excluded' : 'pending';
             return `
-              <div class="pending-item">
+              <div class="pending-item state-${state}">
                 <span class="pending-name">${escapeHtml(item.procedure.name)}${marker}
                   <span class="pending-dur">${item.duration}'</span>
                 </span>
                 <div class="pending-actions">
-                  <button class="applies-btn aplica" data-action="apply" data-visit="${row.visit.id}" data-proc="${item.procedure.id}" data-value="true">✓ Aplica</button>
-                  <button class="applies-btn no-aplica" data-action="apply" data-visit="${row.visit.id}" data-proc="${item.procedure.id}" data-value="false">✕ No aplica</button>
+                  <button class="applies-btn aplica ${decision === true ? 'selected' : ''}" data-action="apply" data-visit="${row.visit.id}" data-proc="${item.procedure.id}" data-value="true">✓ Aplica</button>
+                  <button class="applies-btn no-aplica ${decision === false ? 'selected' : ''}" data-action="apply" data-visit="${row.visit.id}" data-proc="${item.procedure.id}" data-value="false">✕ No aplica</button>
                 </div>
               </div>
             `;
@@ -905,9 +930,9 @@
       ? `<strong>${formatDuration(summary.definite)}</strong> <span class="dur-range">– ${formatDuration(summary.definite + summary.pending)}</span>`
       : `<strong>${formatDuration(summary.definite)}</strong>`;
 
-    const procBody = (applied.length + pending.length) === 0
+    const procBody = (appliedChipsItems.length + conditionalItems.length) === 0
       ? '<div class="empty-procs">Sin procedimientos aplicables</div>'
-      : `${appliedChips ? `<div class="applied-chips">${appliedChips}</div>` : ''}${pendingBlock}`;
+      : `${appliedChips ? `<div class="applied-chips">${appliedChips}</div>` : ''}${conditionalBlock}`;
 
     return `
       <div class="visit-card">
