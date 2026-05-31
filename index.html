@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Calculadora de Visitas — Ensayo Clínico de Esclerosis Múltiple</title>
+  <link rel="stylesheet" href="css/styles.css?v=allegro26">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="logo">MS</span>
+      <span>MS Trial Visit Calculator</span>
+    </div>
+    <nav class="app-nav">
+      <a href="index.html" class="active">Calculadora</a>
+      <a href="protocols.html">Protocolos por centro</a>
+    </nav>
+    <div class="header-user" id="headerUser"></div>
+  </header>
+
+  <main>
+    <h1>Calculadora de visitas del paciente</h1>
+    <p class="subtitle">Calcula las fechas propuestas de cada visita y la duración estimada según el protocolo del centro.</p>
+
+    <div class="grid-2">
+      <!-- Form -->
+      <section class="card no-print">
+        <h2>Datos del paciente</h2>
+
+        <div class="form-group">
+          <label for="centerSelect">Centro</label>
+          <select id="centerSelect"></select>
+          <div class="hint" id="centerHint"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="patientSelect">Paciente</label>
+          <div class="patient-row">
+            <select id="patientSelect"></select>
+            <button type="button" class="secondary icon" id="newPatientBtn" title="Crear nuevo paciente">+ Nuevo</button>
+          </div>
+          <div class="hint" id="patientHint"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="patientAddress">Dirección del paciente</label>
+          <textarea id="patientAddress" placeholder="Calle, número, código postal, ciudad"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="anchorVisit">Visita de anclaje</label>
+          <select id="anchorVisit">
+            <option value="screening">Screening</option>
+            <option value="baseline" selected>Baseline (Day 1)</option>
+          </select>
+          <div class="hint">El resto de fechas se calculan en relación a esta visita.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="anchorDate">Fecha de la visita de anclaje</label>
+          <input type="date" id="anchorDate" />
+        </div>
+
+        <div class="flex-row">
+          <button class="primary" id="calculateBtn">Calcular</button>
+          <button class="secondary no-print" id="printBtn">Imprimir</button>
+        </div>
+      </section>
+
+      <!-- Results -->
+      <section>
+        <div id="resultsContainer">
+          <div class="card empty">
+            Introduce los datos del paciente y pulsa <strong>Calcular</strong> para ver las visitas.
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- New Patient modal -->
+  <div class="modal-overlay" id="newPatientModal" hidden>
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Nuevo paciente</h2>
+        <button class="modal-close" id="closePatientModal" title="Cerrar">×</button>
+      </div>
+      <form id="newPatientForm">
+        <div class="form-group">
+          <label for="newPatientId">Nº de paciente</label>
+          <input type="text" id="newPatientId" placeholder="P-007" required>
+          <div class="hint">Formato sugerido: P-XXX</div>
+        </div>
+        <div class="form-group">
+          <label for="newPatientName">Nombre</label>
+          <input type="text" id="newPatientName" placeholder="Nombre y apellidos" required>
+        </div>
+        <div class="form-group">
+          <label for="newPatientAddress">Dirección</label>
+          <textarea id="newPatientAddress" placeholder="Calle, número, código postal, ciudad" required></textarea>
+        </div>
+        <div class="form-group">
+          <label class="trait">
+            <input type="checkbox" id="newPatientWocbp">
+            <span>Mujer en edad fértil (WOCBP)</span>
+          </label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="secondary" id="cancelPatientModal">Cancelar</button>
+          <button type="submit" class="primary">Guardar paciente</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/session.js?v=allegro26"></script>
+  <script src="js/data.js?v=allegro26"></script>
+  <script src="js/calculator.js?v=allegro26"></script>
+</body>
+</html>

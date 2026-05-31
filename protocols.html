@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Protocolos por centro — MS Trial Calculator</title>
+  <link rel="stylesheet" href="css/styles.css?v=allegro26">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="logo">MS</span>
+      <span>MS Trial Visit Calculator</span>
+    </div>
+    <nav class="app-nav">
+      <a href="index.html">Calculadora</a>
+      <a href="protocols.html" class="active">Protocolos por centro</a>
+    </nav>
+    <div class="header-user" id="headerUser"></div>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <div>
+        <h1>Protocolo del centro</h1>
+        <p class="subtitle">Configura los procedimientos del Schedule of Activities y sus duraciones reales en tu centro.</p>
+      </div>
+      <div class="actions">
+        <button class="secondary" id="resetBtn" title="Restaurar el protocolo predeterminado de este centro">Restaurar predeterminados</button>
+      </div>
+    </div>
+
+    <div id="protocolsLayout" class="grid-2">
+      <!-- Centers list (only shown if no session) -->
+      <section class="card" id="centersPanel">
+        <div class="toolbar">
+          <h2 style="margin: 0;">Centros</h2>
+          <button class="primary icon" id="addCenterBtn">+ Añadir</button>
+        </div>
+        <div id="centerList" class="center-list"></div>
+      </section>
+
+      <!-- Center editor -->
+      <section id="centerEditor"></section>
+    </div>
+  </main>
+
+  <script src="js/session.js?v=allegro26"></script>
+  <script src="js/data.js?v=allegro26"></script>
+  <script src="js/protocols.js?v=allegro26"></script>
+</body>
+</html>
