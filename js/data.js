@@ -277,7 +277,8 @@ const DEFAULT_PATIENT_PROFILES = [
     birthYear: 1988,    // ~38
     sex: 'F',
     wocbp: true,
-    address: 'Carrer de Sicília 245, 08013 Barcelona'
+    // Igualada: ~70 km de Hospital Clínic (~70 min en taxi)
+    address: 'Rambla de Sant Isidre 12, 08700 Igualada'
   },
   {
     id: 'P-002',
@@ -286,6 +287,7 @@ const DEFAULT_PATIENT_PROFILES = [
     birthYear: 1985,    // ~41
     sex: 'M',
     wocbp: false,
+    // Local Barcelona, cerca de Vall d'Hebron
     address: 'Carrer del Pi i Margall 53, 08024 Barcelona'
   },
   {
@@ -295,7 +297,8 @@ const DEFAULT_PATIENT_PROFILES = [
     birthYear: 1995,    // ~31
     sex: 'F',
     wocbp: true,
-    address: 'Avinguda President Companys 12, 08911 Badalona'
+    // Maresme: Mataró, ~25 km de Germans Trias (~35 min)
+    address: 'Carrer d\'Argentona 45, 08302 Mataró'
   },
   {
     id: 'P-004',
@@ -304,7 +307,8 @@ const DEFAULT_PATIENT_PROFILES = [
     birthYear: 2002,    // ~24
     sex: 'F',
     wocbp: true,
-    address: 'Carrer de Cartagena 268, 08025 Barcelona'
+    // Sabadell, ~22 km de Vall d'Hebron (~30 min)
+    address: 'Passeig de la Plaça Major 8, 08201 Sabadell'
   },
   {
     id: 'P-005',
@@ -313,6 +317,7 @@ const DEFAULT_PATIENT_PROFILES = [
     birthYear: 1989,    // ~37
     sex: 'F',
     wocbp: true,
+    // Local L'Hospitalet, cerca de Bellvitge
     address: 'Rambla Marina 244, 08907 L\'Hospitalet de Llobregat'
   },
   {
@@ -322,20 +327,21 @@ const DEFAULT_PATIENT_PROFILES = [
     birthYear: 1976,    // ~50
     sex: 'F',
     wocbp: false,
-    address: 'Carrer de Riera Blanca 105, 08907 L\'Hospitalet de Llobregat'
+    // Vilafranca del Penedès, ~50 km de Bellvitge (~50 min)
+    address: 'Rambla de Sant Francesc 12, 08720 Vilafranca del Penedès'
   }
 ];
 
-const PATIENTS_STORAGE_KEY = 'msTrialPatients_v2';
-const PATIENTS_STORAGE_KEY_LEGACY = 'msTrialPatients_v1';
+const PATIENTS_STORAGE_KEY = 'msTrialPatients_v3';
+const PATIENTS_STORAGE_KEYS_LEGACY = ['msTrialPatients_v1', 'msTrialPatients_v2'];
 
 function loadPatients() {
   const raw = localStorage.getItem(PATIENTS_STORAGE_KEY);
   if (raw) {
     try { return JSON.parse(raw); } catch (e) { /* fall through */ }
   }
-  // Seed with defaults on first run (and clear legacy)
-  localStorage.removeItem(PATIENTS_STORAGE_KEY_LEGACY);
+  // Seed with defaults on first run (and clear legacy keys)
+  PATIENTS_STORAGE_KEYS_LEGACY.forEach(k => localStorage.removeItem(k));
   const seed = JSON.parse(JSON.stringify(DEFAULT_PATIENT_PROFILES));
   localStorage.setItem(PATIENTS_STORAGE_KEY, JSON.stringify(seed));
   return seed;
