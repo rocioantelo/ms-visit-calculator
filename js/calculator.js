@@ -605,7 +605,13 @@
       width: 100%;
       border-collapse: collapse;
       font-size: 13px;
+      table-layout: fixed;
     }
+    th.col-num    { width: 8%;  }
+    th.col-name   { width: 24%; }
+    th.col-date   { width: 22%; }
+    th.col-window { width: 24%; }
+    th.col-time   { width: 22%; }
     th {
       background: #eff6ff;
       color: #1e40af;
@@ -624,16 +630,15 @@
     }
     tr:last-child td { border-bottom: none; }
     .visit-num {
-      width: 36px;
       font-weight: 700;
       color: #2563eb;
       font-size: 16px;
     }
     .visit-name {
       font-weight: 600;
+      word-wrap: break-word;
     }
     .visit-date {
-      width: 140px;
     }
     .date-main {
       font-weight: 700;
@@ -647,12 +652,11 @@
       text-transform: capitalize;
     }
     .visit-window {
-      width: 200px;
       color: #6b7280;
       font-size: 12px;
+      word-wrap: break-word;
     }
     .visit-time {
-      width: 170px;
     }
     .time-total {
       font-size: 14px;
@@ -762,11 +766,11 @@
   <table>
     <thead>
       <tr>
-        <th>#</th>
-        <th>Visita</th>
-        <th>Fecha prevista</th>
-        <th>Margen permitido</th>
-        <th>Tiempo aproximado</th>
+        <th class="col-num">#</th>
+        <th class="col-name">Visita</th>
+        <th class="col-date">Fecha prevista</th>
+        <th class="col-window">Margen permitido</th>
+        <th class="col-time">Tiempo aproximado</th>
       </tr>
     </thead>
     <tbody>
