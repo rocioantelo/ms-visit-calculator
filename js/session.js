@@ -41,28 +41,32 @@
   }
 
   function renderHeaderUser() {
-    const el = document.getElementById('headerUser');
-    if (!el) return;
+    const userEl = document.getElementById('headerUser');
+    const logoutEl = document.getElementById('headerLogout');
+    if (!userEl) return;
     const session = getSession();
     if (!session || !session.loggedIn) {
-      el.innerHTML = '<a href="login.html" class="logout-link">Iniciar sesión</a>';
+      userEl.innerHTML = '<a href="login.html" class="logout-link">Iniciar sesión</a>';
+      if (logoutEl) logoutEl.innerHTML = '';
       return;
     }
-    el.innerHTML = `
+    userEl.innerHTML = `
       <div class="header-user-info">
         <div class="name">${escapeHtml(session.user || '—')}</div>
         <div class="role">${escapeHtml(session.role || '')}</div>
       </div>
       <div class="header-user-avatar">${initials(session.user || 'U')}</div>
-      <a href="#" id="logoutBtn" class="logout-link">Cerrar sesión</a>
     `;
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-      logoutBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        clearSession();
-        window.location.href = 'login.html';
-      });
+    if (logoutEl) {
+      logoutEl.innerHTML = '<a href="#" id="logoutBtn" class="logout-link">Cerrar sesión</a>';
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          clearSession();
+          window.location.href = 'login.html';
+        });
+      }
     }
   }
 

@@ -112,22 +112,30 @@ h3 { font-size: 15px; margin: 0 0 8px; font-weight: 600; }
   .grid-2 { grid-template-columns: 1fr; }
 }
 
+/* Desktop: logout sits next to user info */
+.header-logout { display: flex; align-items: center; }
+
 /* ============= MOBILE RESPONSIVE ============= */
 @media (max-width: 640px) {
   header.app-header {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "brand    logout"
+      "user     user"
+      "nav      nav";
+    column-gap: 12px;
+    row-gap: 12px;
     padding: 18px 18px 0;
-    column-gap: 10px;
-    row-gap: 14px;
   }
   header.app-header::before { height: 4px; }
 
-  /* Row 1: brand takes full width */
   .brand {
-    flex: 1 1 100%;
+    grid-area: brand;
     font-size: 15px;
     min-width: 0;
     gap: 10px;
+    align-self: center;
   }
   .brand .logo {
     width: 30px;
@@ -142,12 +150,21 @@ h3 { font-size: 15px; margin: 0 0 8px; font-weight: 600; }
     line-height: 1.2;
   }
 
-  /* Row 2: user info + avatar + logout, right-aligned */
+  .header-logout {
+    grid-area: logout;
+    align-self: center;
+  }
+  .logout-link {
+    padding: 7px 12px;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
   .header-user {
-    flex: 1 1 100%;
+    grid-area: user;
+    justify-self: end;
     gap: 12px;
     align-items: center;
-    justify-content: flex-end;
   }
   .header-user-info {
     display: block;
@@ -175,16 +192,9 @@ h3 { font-size: 15px; margin: 0 0 8px; font-weight: 600; }
     font-size: 13px;
     flex-shrink: 0;
   }
-  .logout-link {
-    padding: 7px 12px;
-    font-size: 12px;
-    flex-shrink: 0;
-  }
 
-  /* Row 3: nav as a full-width tabs strip */
   nav.app-nav {
-    order: 3;
-    flex: 1 1 100%;
+    grid-area: nav;
     justify-content: stretch;
     gap: 0;
     border-top: 1px solid var(--border);
