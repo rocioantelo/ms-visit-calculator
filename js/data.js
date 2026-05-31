@@ -437,7 +437,17 @@ function addDays(date, days) {
   return d;
 }
 
+const MONTH_ABBR_ES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
 function formatDate(date) {
+  const dd = String(date.getDate()).padStart(2, '0');
+  const mmm = MONTH_ABBR_ES[date.getMonth()];
+  const yyyy = date.getFullYear();
+  return `${dd}-${mmm}-${yyyy}`;
+}
+
+// ISO format (YYYY-MM-DD) for HTML <input type="date"> values
+function formatDateIso(date) {
   const yyyy = date.getFullYear();
   const mm = String(date.getMonth() + 1).padStart(2, '0');
   const dd = String(date.getDate()).padStart(2, '0');

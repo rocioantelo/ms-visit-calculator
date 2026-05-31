@@ -25,7 +25,7 @@
   const printBtn = document.getElementById('printBtn');
   const resultsContainer = document.getElementById('resultsContainer');
 
-  anchorDateInput.value = formatDate(new Date());
+  anchorDateInput.value = formatDateIso(new Date());
 
   function populateCenters() {
     centerSelect.innerHTML = '';
