@@ -609,7 +609,7 @@
     th {
       background: #eff6ff;
       color: #1e40af;
-      text-align: left;
+      text-align: center;
       padding: 10px 12px;
       font-size: 11px;
       text-transform: uppercase;
@@ -619,7 +619,8 @@
     td {
       padding: 14px 12px;
       border-bottom: 1px solid #e5e7eb;
-      vertical-align: top;
+      vertical-align: middle;
+      text-align: center;
     }
     tr:last-child td { border-bottom: none; }
     .visit-num {
@@ -652,7 +653,6 @@
     }
     .visit-time {
       width: 170px;
-      text-align: right;
     }
     .time-total {
       font-size: 14px;
@@ -670,7 +670,7 @@
       margin-top: 3px;
       display: flex;
       gap: 8px;
-      justify-content: flex-end;
+      justify-content: center;
       flex-wrap: wrap;
     }
     .totals-block {
@@ -766,7 +766,7 @@
         <th>Visita</th>
         <th>Fecha prevista</th>
         <th>Margen permitido</th>
-        <th style="text-align: right;">Tiempo aproximado</th>
+        <th>Tiempo aproximado</th>
       </tr>
     </thead>
     <tbody>
