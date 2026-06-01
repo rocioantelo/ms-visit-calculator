@@ -4,10 +4,10 @@
 
   // Demo profiles — one per center, with a sample user name and role
   const PROFILE_TEMPLATES = {
-    vh:        { user: 'Dra. María García',    role: 'Investigadora Principal', email: 'maria.garcia@vhebron.net',          color: '#2563eb' },
-    clinic:    { user: 'Dr. Joan Martí',       role: 'Investigador Principal',  email: 'jmarti@clinic.cat',                 color: '#059669' },
-    bellvitge: { user: 'Anna López',           role: 'Study Coordinator',       email: 'alopez@bellvitgehospital.cat',      color: '#dc2626' },
-    gtp:       { user: 'Pere Soler',           role: 'Study Coordinator',       email: 'psoler@germanstrias.cat',           color: '#7c3aed' }
+    vh:        { user: 'Dra. María García',    role: 'Investigadora Principal', email: 'maria.garcia@vhebronexample.net',         color: '#2563eb' },
+    clinic:    { user: 'Dr. Joan Martí',       role: 'Investigador Principal',  email: 'jmarti@clinicexample.cat',                color: '#059669' },
+    bellvitge: { user: 'Anna López',           role: 'Study Coordinator',       email: 'alopez@bellvitgehospitalexample.cat',     color: '#dc2626' },
+    gtp:       { user: 'Pere Soler',           role: 'Study Coordinator',       email: 'psoler@germanstriasexample.cat',          color: '#7c3aed' }
   };
 
   function profilesForCenters() {
@@ -15,7 +15,7 @@
       const tpl = PROFILE_TEMPLATES[c.id] || {
         user: 'Investigador/a',
         role: 'Profesional',
-        email: 'usuario@centro.cat',
+        email: 'usuario@centroexample.cat',
         color: '#6b7280'
       };
       return { centerId: c.id, centerName: c.name, address: c.address, ...tpl };
