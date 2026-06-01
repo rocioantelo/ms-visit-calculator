@@ -34,6 +34,12 @@ Después abrir `http://localhost:8765/login.html`.
 
 GitHub Pages, desplegado automáticamente en cada push a `main` (ver `.github/workflows/pages.yml`).
 
+## Referencia / fuente del protocolo
+
+El Schedule of Activities (visitas y procedimientos) utilizado en esta aplicación está basado en el ensayo clínico **ALLEGRO** (MS-LAQ-301):
+
+> Comi G, Jeffery D, Kappos L, Montalban X, Boyko A, Rocca MA, Filippi M; ALLEGRO Study Group. Placebo-controlled trial of oral laquinimod for multiple sclerosis. *N Engl J Med.* 2012;366(11):1000–1009. doi:[10.1056/NEJMoa1104318](https://doi.org/10.1056/NEJMoa1104318)
+
 ## TFM
 
 Proyecto desarrollado como parte de un Trabajo de Final de Máster.

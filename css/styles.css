@@ -1620,6 +1620,28 @@ select.locked {
 .danger-text { color: var(--danger); }
 .success-text { color: var(--success); }
 
+/* Reference / citation footer */
+.app-footer {
+  max-width: 1100px;
+  margin: 40px auto 24px;
+  padding: 16px 24px 0;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+.app-footer .ref-label {
+  font-weight: 600;
+  color: var(--text);
+}
+.app-footer a {
+  color: var(--primary);
+  text-decoration: none;
+}
+.app-footer a:hover {
+  text-decoration: underline;
+}
+
 @media print {
   header.app-header, .no-print { display: none !important; }
   main { padding: 0; }

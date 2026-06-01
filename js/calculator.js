@@ -791,6 +791,7 @@
   <div class="footer">
     Documento generado el ${formatDate(new Date())} · MS Trial Visit Calculator
     <br>Las fechas son orientativas. Confirma con el equipo investigador en cada visita.
+    <br>Schedule of Activities basado en el ensayo ALLEGRO (MS-LAQ-301): Comi G, et al.; ALLEGRO Study Group. N Engl J Med. 2012;366(11):1000&#8211;1009. doi:10.1056/NEJMoa1104318.
   </div>
 </body>
 </html>`;
