@@ -287,8 +287,8 @@ const DEFAULT_PATIENT_PROFILES = [
     birthYear: 1985,    // ~41
     sex: 'M',
     wocbp: false,
-    // Local Barcelona, cerca de Vall d'Hebron
-    address: 'Carrer del Pi i Margall 53, 08024 Barcelona'
+    // Barcelona, zona Tibidabo (Sarrià-Sant Gervasi), algo alejado de Vall d'Hebron
+    address: 'Avinguda del Tibidabo 47, 08022 Barcelona'
   },
   {
     id: 'P-003',
