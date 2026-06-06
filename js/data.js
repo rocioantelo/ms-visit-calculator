@@ -332,8 +332,8 @@ const DEFAULT_PATIENT_PROFILES = [
   }
 ];
 
-const PATIENTS_STORAGE_KEY = 'msTrialPatients_v3';
-const PATIENTS_STORAGE_KEYS_LEGACY = ['msTrialPatients_v1', 'msTrialPatients_v2'];
+const PATIENTS_STORAGE_KEY = 'msTrialPatients_v4';
+const PATIENTS_STORAGE_KEYS_LEGACY = ['msTrialPatients_v1', 'msTrialPatients_v2', 'msTrialPatients_v3'];
 
 function loadPatients() {
   const raw = localStorage.getItem(PATIENTS_STORAGE_KEY);
