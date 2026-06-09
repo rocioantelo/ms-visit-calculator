@@ -110,6 +110,12 @@
         <span class="legend-item"><span class="proc-dot state-orange"></span> Confirmar — selecciona "Aplica" o "No aplica" según el paciente</span>
         <span class="legend-item"><span class="proc-dot state-gray"></span> No aplica — no forma parte del protocolo en esta visita</span>
       </div>
+      <div class="note-banner">
+        <strong>Nota sobre las ventanas:</strong> el protocolo del ALLEGRO solo define ventanas a nivel de prueba
+        (screening hasta 30 días antes del baseline; RM ±4 días; llamadas 14±2 d; test de embarazo 28±2 d).
+        Las ventanas de ±7 días de las visitas programadas (±14 en terminación) son un <em>supuesto de este TFM</em>,
+        basado en la práctica habitual en ensayos de EM, no un dato del protocolo.
+      </div>
     ` + data.visits.map(visit => {
       const entries = center.visitProcedures[visit.id] || [];
       // Mandatory always counts

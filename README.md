@@ -40,6 +40,21 @@ El Schedule of Activities (visitas y procedimientos) utilizado en esta aplicaci�
 
 > Comi G, Jeffery D, Kappos L, Montalban X, Boyko A, Rocca MA, Filippi M; ALLEGRO Study Group. Placebo-controlled trial of oral laquinimod for multiple sclerosis. *N Engl J Med.* 2012;366(11):1000–1009. doi:[10.1056/NEJMoa1104318](https://doi.org/10.1056/NEJMoa1104318)
 
+### Ventanas de visita (supuestos y fuentes)
+
+Tras revisar el protocolo completo del ALLEGRO (MS-LAQ-301, enmienda nº 4, 353 páginas), las ventanas temporales se han fijado así:
+
+| Visita / prueba | Ventana aplicada | Fuente |
+|---|---|---|
+| Screening (Mes −1) | hasta 30 días antes del baseline (0 / +30 d) | Protocolo §8.3.1 |
+| Baseline (Mes 0) | sin ventana (anclaje de randomización) | Protocolo §8.3.2–8.3.3 |
+| RM (resonancia) | ±4 días respecto a la visita; basal 13–7 d antes; terminación dentro de los 4 d previos | Protocolo §10.1.12 |
+| Llamadas de trombosis | 14 ± 2 días tras la visita | Protocolo (safety) |
+| Test de embarazo en casa | cada 28 ± 2 días | Protocolo §8.3.4 |
+| **Visitas programadas V1–V9 y Terminación** | **±7 días (±14 en terminación)** | **Supuesto del TFM** |
+
+> **Nota importante:** el protocolo del ALLEGRO **no especifica ninguna ventana temporal para las visitas de tratamiento programadas** (V1–V9 ni terminación); solo define tolerancias a nivel de prueba concreta (RM, llamadas, test de embarazo). Por ello, las ventanas de ±7 días (±14 en la visita de terminación) aplicadas en la calculadora son un **supuesto operativo de este TFM**, basado en la práctica habitual en ensayos clínicos de esclerosis múltiple, y no un dato extraído del protocolo.
+
 ## TFM
 
 Proyecto desarrollado como parte de un Trabajo de Final de Máster.

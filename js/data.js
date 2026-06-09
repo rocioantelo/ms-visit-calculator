@@ -2,8 +2,18 @@
 // Based on Protocol No: MS-LAQ-301, Amended protocol No. 4 (Oct 7, 2009)
 console.log('[MS Calculator] data.js cargado — versión ALLEGRO (12 visitas, 33 procedimientos)');
 
+// Ventanas de visita (windowBefore / windowAfter, en días respecto al día propuesto):
+//  - Screening: el protocolo ALLEGRO (§8.3.1) indica que debe realizarse "hasta 30 días
+//    antes del baseline". Anclado en el día -30, esto equivale a 0 días antes / 30 días
+//    después (puede caer en cualquier momento entre el día -30 y el baseline).
+//  - V1-V9 y Terminación: el protocolo ALLEGRO NO especifica ninguna ventana para las
+//    visitas programadas (verificado en las 353 páginas). Los valores ±7 / ±14 son un
+//    SUPUESTO de este TFM, basado en la práctica habitual en ensayos de EM, no un dato
+//    del protocolo. Documentado como tal en el README.
+//  - Las únicas ventanas reales del protocolo son a nivel de prueba: RM ±4 días (ver notas
+//    en el procedimiento MRI), llamadas de trombosis 14±2 d, test de embarazo 28±2 d.
 const DEFAULT_VISITS = [
-  { id: 'screening',   name: 'V-1 Screening (Month -1)',            day: -30, windowBefore: 7,  windowAfter: 0  },
+  { id: 'screening',   name: 'V-1 Screening (Month -1)',            day: -30, windowBefore: 0,  windowAfter: 30 },
   { id: 'baseline',    name: 'V BL Baseline (Month 0)',             day: 0,   windowBefore: 0,  windowAfter: 0  },
   { id: 'v1',          name: 'V1 (Month 1)',                        day: 30,  windowBefore: 7,  windowAfter: 7  },
   { id: 'v2',          name: 'V2 (Month 2)',                        day: 60,  windowBefore: 7,  windowAfter: 7  },
@@ -75,6 +85,8 @@ const DEFAULT_CENTERS = (() => {
     ecgBaseline:  '3 registros en intervalos de 15 min',                                        // c
     vitalsBL:     'Pre-dosis y post-dosis (30 y 60 min)',                                       // m
     mriBaseline:  'Realizar 13-7 días antes de la randomización',                               // g
+    mriWindow:    'La RM puede realizarse ±4 días respecto al día de la visita (protocolo §10.1.12)', // ventana real RM
+    mriTerm:      'La RM debe realizarse dentro de los 4 días previos a la visita (protocolo §10.1.12)', // ventana RM terminación
     msfcScreen:   '3 veces para entrenamiento',                                                 // i
     visualAcuity: '3 cartillas (100%, 2.5% y 1.25% de contraste)',                              // n
     immunoLim:    'Solo meses 0, 1, 6, 12 y 24',                                                // l
@@ -159,7 +171,7 @@ const DEFAULT_CENTERS = (() => {
       m('conMed'), m('physicalExam'), m('vitalSigns'), m('ecg'), m('safetyLab'),
       c('immunology', N.immunoLim),
       c('serumHCG', N.wocbp), c('urineHCG', N.wocbp),
-      m('mri'),
+      mn('mri', N.mriWindow),
       m('neuroExam'), mn('relapseEval', N.relapse),
       m('msfc'), mn('visualAcuity', N.visualAcuity), m('mfis'), m('sf36'),
       c('freqMri', N.ancillarySub), c('mtMri', N.ancillarySub),
@@ -177,7 +189,7 @@ const DEFAULT_CENTERS = (() => {
       c('immunology', N.immunoLim),
       mn('moaSerum', N.serumMOA),
       c('serumHCG', N.wocbp), c('urineHCG', N.wocbp),
-      m('mri'),
+      mn('mri', N.mriWindow),
       m('neuroExam'), mn('relapseEval', N.relapse),
       m('msfc'), mn('visualAcuity', N.visualAcuity), m('mfis'), m('sf36'),
       m('drugDispensing'), m('ae')
@@ -208,7 +220,7 @@ const DEFAULT_CENTERS = (() => {
       c('immunology', N.immunoLim),
       mn('moaSerum', N.serumMOA),
       c('serumHCG', N.wocbp), c('urineHCG', N.wocbp),
-      m('mri'),
+      mn('mri', N.mriTerm),
       m('neuroExam'), mn('relapseEval', N.relapse),
       mn('msfc', N.termExt),
       mn('visualAcuity', N.visualAcuity),
@@ -366,7 +378,8 @@ function findPatient(patientId) {
   return loadPatients().find(p => p.id === patientId);
 }
 
-const STORAGE_KEY = 'msTrialCalculatorData_v5';
+const STORAGE_KEY = 'msTrialCalculatorData_v6';
+const STORAGE_KEY_LEGACY_V5 = 'msTrialCalculatorData_v5';
 const STORAGE_KEY_LEGACY_V4 = 'msTrialCalculatorData_v4';
 const STORAGE_KEY_LEGACY_V3 = 'msTrialCalculatorData_v3';
 const STORAGE_KEY_LEGACY_V2 = 'msTrialCalculatorData_v2';
@@ -402,6 +415,7 @@ function loadData() {
   localStorage.removeItem(STORAGE_KEY_LEGACY_V2);
   localStorage.removeItem(STORAGE_KEY_LEGACY_V3);
   localStorage.removeItem(STORAGE_KEY_LEGACY_V4);
+  localStorage.removeItem(STORAGE_KEY_LEGACY_V5);
   return {
     visits: JSON.parse(JSON.stringify(DEFAULT_VISITS)),
     procedures: JSON.parse(JSON.stringify(DEFAULT_PROCEDURES)),
@@ -419,6 +433,7 @@ function resetData() {
   localStorage.removeItem(STORAGE_KEY_LEGACY_V2);
   localStorage.removeItem(STORAGE_KEY_LEGACY_V3);
   localStorage.removeItem(STORAGE_KEY_LEGACY_V4);
+  localStorage.removeItem(STORAGE_KEY_LEGACY_V5);
   return loadData();
 }
 

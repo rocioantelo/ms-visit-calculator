@@ -415,6 +415,18 @@ table tr:hover td { background: #fafbfd; }
   gap: 6px;
 }
 
+.note-banner {
+  padding: 10px 14px;
+  background: #fff8e1;
+  border: 1px solid #f0d98c;
+  border-left: 4px solid #e0a800;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #6b5300;
+}
+
 .proc-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
